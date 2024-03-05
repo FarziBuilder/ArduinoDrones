@@ -6,18 +6,20 @@ unsigned long timer_1, timer_2, timer_3, timer_4;
 // Setup routine
 void setup() {
   // Arduino (ATmega) pins default to inputs, so they don't need to be explicitly declared as inputs
-  PCICR |= (1 << PCIE0);    // set PCIE0 to enable PCMSK0 scan
+  PCICR |= (1 << PCIE1);    // set PCIE0 to enable PCMSK0 scan
   PCMSK0 |= (1 << PCINT0);   // set PCINT0 (digital input 8) to trigger an interrupt on state change
   PCMSK0 |= (1 << PCINT1);   // set PCINT1 (digital input 9) to trigger an interrupt on state change
   PCMSK0 |= (1 << PCINT2);   // set PCINT2 (digital input 10) to trigger an interrupt on state change
   PCMSK0 |= (1 << PCINT3);   // set PCINT3 (digital input 11) to trigger an interrupt on state change
   Serial.begin(9600);
+  Serial.print(PCINT2);
 }
 
 // Main program loop
 void loop() {
-  delay(250);
-  print_signals();
+  delay(500);
+  //print_signals();
+  //Serial.print("hi");
 }
 
 // This routine is called every time input 8, 9, 10 or 11 changed state
@@ -59,47 +61,48 @@ ISR(PCINT0_vect) {
 // Subroutine for displaying the receiver signals
 void print_signals() {
     //Serial.print("Roll:");
-    if(receive_input_channel_1 - 1480 < 0 && receive_input_channel_1 - 1000 > 0){
-      Serial.print("PitchDown");
+    if(receive_input_channel_1 - 1400 < 0 && receive_input_channel_1 - 1000 >= 0){
+      Serial.print("YawLeft");
       Serial.println(receive_input_channel_1);
     }
-    else if(receive_input_channel_1 - 1520 > 0 && receive_input_channel_1 - 2000 < 0){
-      Serial.print("PitchUp");
+    else if(receive_input_channel_1 - 1600 > 0 && receive_input_channel_1 - 2000 <= 0){
+      Serial.print("YawRight");
       Serial.println(receive_input_channel_1);
     }
     //else Serial.print("--");
     
     //Serial.print("Pitch:");
-    if(receive_input_channel_2 - 1480 < 0 && receive_input_channel_2 - 1000 > 0){
-      Serial.print("GasDown:");
+    if(receive_input_channel_2 - 1400 < 0 && receive_input_channel_2 - 1000 >= 0){
+      Serial.print("PitchDown");
       Serial.println(receive_input_channel_2);
     }
-    else if(receive_input_channel_2 - 1520 > 0 && receive_input_channel_2 - 2000 < 0){
-      Serial.print("GasUp:");
+    else if(receive_input_channel_2 - 1600 > 0 && receive_input_channel_2 - 2000 <= 0){
+      Serial.print("PitchUp");
       Serial.println(receive_input_channel_2);
     }
     //else Serial.print("--");
 
     //Serial.print("Gas:");
-    if(receive_input_channel_3 - 1480 < 0 && receive_input_channel_3 - 1000 > 0){
-      Serial.print("YawLeft");
+    if(receive_input_channel_3 - 1400 < 0 && receive_input_channel_3 - 1000 >= 0){
+      Serial.print("GasDown:");
       Serial.println(receive_input_channel_3);
     }
-    else if(receive_input_channel_3 - 1520 > 0 && receive_input_channel_3 - 2000 < 0){
-      Serial.print("YawRight");
+    else if(receive_input_channel_3 - 1600 > 0 && receive_input_channel_3 - 2000 <= 0){
+      Serial.print("GasUp:");
       Serial.println(receive_input_channel_3);
     }
     //else Serial.print("--");
 
     //Serial.print("Yaw:");
-    if(receive_input_channel_4 - 1480 < 0 && receive_input_channel_4 - 1000 > 0){
+    if(receive_input_channel_4 - 1400 < 0 && receive_input_channel_4 - 1000 >= 0){
       Serial.print("Rollleft");
       Serial.println(receive_input_channel_4);
     }
-    else if(receive_input_channel_4 - 1520 > 0 && receive_input_channel_4 - 2000 < 0){
+    else if(receive_input_channel_4 - 1600 > 0 && receive_input_channel_4 - 2000 <= 0){
       Serial.print("RollRight");
       Serial.println(receive_input_channel_4);
     }
     //else Serial.print("--");
+    //Serial.print("check");
     
 };
