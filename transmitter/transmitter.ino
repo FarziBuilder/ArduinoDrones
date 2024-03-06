@@ -17,9 +17,12 @@ void setup() {
 
 // Main program loop
 void loop() {
-  delay(500);
+  //delay(500);
   //print_signals();
   //Serial.print("hi");
+
+  
+
 }
 
 // This routine is called every time input 8, 9, 10 or 11 changed state
