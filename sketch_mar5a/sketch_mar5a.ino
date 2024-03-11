@@ -26,17 +26,17 @@ void setup() {
   start = 0;
   zero_timer = micros();
   //check if the throttle is at lowest
-  while (receiver_input3 > 990 || receiver_input3 < 1020  || receiver_input4 < 1400){
-    start++;
-    PORTD |= 0b11110000;
-    delayMicroseconds(1000);
-    PORTD &= 0b00001111;
+  // while (receiver_input3 > 990 || receiver_input3 < 1020  || receiver_input4 < 1400){
+  //   start++;
+  //   PORTD |= 0b11110000;
+  //   delayMicroseconds(1000);
+  //   PORTD &= 0b00001111;
 
-    if(start == 125){
-      PINB |= 0b00010000;
-      start = 0;
-    }
-  }
+  //   if(start == 125){
+  //     PINB |= 0b00010000;
+  //     start = 0;
+  //   }
+  // }
 
 }
 
@@ -53,13 +53,14 @@ void loop() {
   //give me a delay of 4000 ms using while
   zero_timer = micros();
   while(micros() < zero_timer + 4000);
-
+  Serial.println("loop");
   //send a pulse of 1500 ms to each of the D pins. (Why D?)
   //first create vars to store future time
-  futureTime1 = zero_timer + receiver_input_channel_3;
-  futureTime2 = zero_timer + receiver_input_channel_3;
-  futureTime3 = zero_timer + receiver_input_channel_3;
-  futureTime4 = zero_timer + receiver_input_channel_3;
+  //futureTime1 = zero_timer + receiver_input_channel_3;
+  futureTime1 = zero_timer + 1500;
+  // futureTime2 = zero_timer + receiver_input_channel_3;
+  // futureTime3 = zero_timer + receiver_input_channel_3;
+  // futureTime4 = zero_timer + receiver_input_channel_3;
   //set D pin on
   PORTD |= 0b11110000;
   //use if find out whether that future time has come or not
@@ -67,9 +68,9 @@ void loop() {
     //if time has exceeded then shut down that Pin
     esc_timer = micros();
     if (esc_timer > futureTime1) PORTD &= 0b11101111;
-    if (esc_timer > futureTime2) PORTD &= 0b11011111;
-    if (esc_timer > futureTime3) PORTD &= 0b10111111;
-    if (esc_timer > futureTime4) PORTD &= 0b01111111;
+    // if (esc_timer > futureTime2) PORTD &= 0b11011111;
+    // if (esc_timer > futureTime3) PORTD &= 0b10111111;
+    // if (esc_timer > futureTime4) PORTD &= 0b01111111;
   }
 
   //print_signals();
